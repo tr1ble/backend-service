@@ -8,16 +8,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("QA")
 public class DataSourceCustomConfig {
+  private static final String URL = "jdbc:h2:mem:qa";
+  private static final String USERNAME = "qa";
+  private static final String PASSWORD = "qa";
 
   @Bean
   @ConditionalOnMissingBean(DataSource.class)
   public DataSource dataSource() {
     DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-    dataSourceBuilder.url("jdbc:h2:mem:dev");
-    dataSourceBuilder.username("dev");
-    dataSourceBuilder.password("dev");
+    dataSourceBuilder.url(URL);
+    dataSourceBuilder.username(USERNAME);
+    dataSourceBuilder.password(PASSWORD);
 
     return dataSourceBuilder.build();
   }

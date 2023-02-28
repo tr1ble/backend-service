@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Endpoint(id = "custom-details")
 public class CustomDetailsEndpoint {
 
+  private static final String CUSTOM_DETAILS_END_POINT = "custom-details-end-point";
+
   @ReadOperation
   public CustomDetails details() {
     Map<String, Object> details = new LinkedHashMap<>();
@@ -23,6 +25,6 @@ public class CustomDetailsEndpoint {
 
   @ReadOperation
   public String customDetailsEndpointByName(@Selector String name) {
-    return "custom-details-end-point";
+    return CUSTOM_DETAILS_END_POINT;
   }
 }

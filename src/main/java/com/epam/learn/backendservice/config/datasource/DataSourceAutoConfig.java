@@ -10,12 +10,16 @@ import org.springframework.context.annotation.Profile;
 @Profile("DEV")
 public class DataSourceAutoConfig {
 
+  private static final String URL = "jdbc:h2:mem:dev";
+  private static final String USERNAME = "dev";
+  private static final String PASSWORD = "dev";
+
   @Bean
   public DataSource dataSource() {
     DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-    dataSourceBuilder.url("jdbc:h2:mem:test");
-    dataSourceBuilder.username("test");
-    dataSourceBuilder.password("test");
+    dataSourceBuilder.url(URL);
+    dataSourceBuilder.username(USERNAME);
+    dataSourceBuilder.password(PASSWORD);
 
     return dataSourceBuilder.build();
   }
