@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@Profile("DEV")
+@Profile({"DEV", "QA"})
 public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityWebFilterChain(

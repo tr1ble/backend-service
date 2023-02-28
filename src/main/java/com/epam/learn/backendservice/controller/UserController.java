@@ -50,7 +50,7 @@ public class UserController {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<User> findAll(@RequestParam List<Long> ids) {
-    return ids.isEmpty() ? userService.getAll() : userService.getById(ids);
+  public List<User> findAll(@RequestParam(required = false) List<Long> ids) {
+    return ids == null || ids.isEmpty() ? userService.getAll() : userService.getById(ids);
   }
 }
