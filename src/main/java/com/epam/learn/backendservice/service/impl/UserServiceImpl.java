@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
