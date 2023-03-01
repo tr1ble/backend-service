@@ -3,11 +3,11 @@ package com.epam.learn.backendservice.util;
 import com.epam.learn.backendservice.model.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UserUtils {
   private static final String USERNAME = "test";
   private static final String PASSWORD = "test";
-  private static final long ID = 0L;
 
   public static List<User> generateNewUsers(int number) {
     List<User> users = new ArrayList<>(number);
@@ -25,7 +25,7 @@ public class UserUtils {
   public static User generateExistingUser(int number) {
     return User
         .builder()
-        .id(ID + number)
+        .id(UUID.randomUUID())
         .username(USERNAME)
         .password(PASSWORD)
         .build();

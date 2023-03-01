@@ -7,6 +7,7 @@ import com.epam.learn.backendservice.model.User;
 import com.epam.learn.backendservice.util.UserUtils;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserRepositoryTest {
   private static final int USER_COUNT = 5;
 
   @Autowired
-  private UserRepository userRepository;
+  private transient UserRepository userRepository;
 
   @Test
   public void whenCalledSave_thenCorrectNumberOfUsers() {
@@ -33,7 +34,7 @@ public class UserRepositoryTest {
 
   @Test
   public void whenCalledSave_thenUpdateUser() {
-    long id = userRepository.save(UserUtils.generateExistingUser(4)).getId();
+    UUID id = userRepository.save(UserUtils.generateExistingUser(4)).getId();
     Optional<User> user = userRepository.findById(id);
 
     assertTrue(user.isPresent());

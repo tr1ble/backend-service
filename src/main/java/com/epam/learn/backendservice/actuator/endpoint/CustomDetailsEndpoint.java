@@ -9,15 +9,17 @@ import org.springframework.boot.actuate.endpoint.annotation.Selector;
 import org.springframework.stereotype.Component;
 
 @Component
-@Endpoint(id = "custom-details")
+@Endpoint(id = "customDetails")
 public class CustomDetailsEndpoint {
 
   private static final String CUSTOM_DETAILS_END_POINT = "custom-details-end-point";
 
   @ReadOperation
-  public CustomDetails details() {
+  public CustomDetails details(String userDetail) {
     Map<String, Object> details = new LinkedHashMap<>();
     details.put("CustomDetails", "Custom details");
+    details.put("UserDetail", userDetail);
+
     return CustomDetails.builder()
         .details(details)
         .build();
