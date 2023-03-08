@@ -1,8 +1,10 @@
 package com.epam.learn.backendservice.service.impl;
 
-import com.epam.learn.backendservice.dto.UserRequest;
+import com.epam.learn.backendservice.messaging.producer.UserProducer;
+import com.epam.learn.backendservice.model.UserModel;
+import com.epam.learn.User;
+import com.epam.learn.backendservice.service.impl.dto.UserRequest;
 import com.epam.learn.backendservice.mapper.UserMapper;
-import com.epam.learn.backendservice.model.User;
 import com.epam.learn.backendservice.repository.UserRepository;
 import com.epam.learn.backendservice.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,8 +13,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,34 +20,47 @@ import org.springframework.stereotype.Component;
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
+  private final UserProducer userProducer;
 
-  public User create(UserRequest userRequest) {
+  @Override
+  public UserModel create(UserRequest userRequest) {
     return userRepository.save(userMapper.mapToDomain(userRequest));
   }
 
-  public List<User> getById(List<UUID> ids) {
-    Iterable<User> users = userRepository.findAllById(ids);
+  @Override
+  public List<UserModel> getById(List<UUID> ids) {
+    Iterable<UserModel> users = userRepository.findAllById(ids);
     return StreamSupport
         .stream(users.spliterator(), false)
         .collect(Collectors.toList());
   }
 
-  public List<User> getAll() {
-    Iterable<User> users = userRepository.findAll();
+  @Override
+  public List<UserModel> getAll() {
+    Iterable<UserModel> users = userRepository.findAll();
     return StreamSupport
         .stream(users.spliterator(), false)
         .collect(Collectors.toList());
   }
 
-  public User getById(UUID id) {
+  @Override
+  public UserModel getById(UUID id) {
     return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
 
+  @Override
   public void deleteById(UUID id) {
     userRepository.deleteById(id);
   }
 
-  public User update(User user) {
+  @Override
+  public UserModel update(UserModel user) {
     return userRepository.save(user);
+  }
+
+  @Override
+  public void send(UUID id) {
+    UserModel user = getById(id);
+    userProducer.produceUser(userMapper.mapToAvro(user));
   }
 }

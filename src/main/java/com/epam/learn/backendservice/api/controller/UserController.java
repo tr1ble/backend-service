@@ -1,13 +1,12 @@
 package com.epam.learn.backendservice.api.controller;
 
 import com.epam.learn.backendservice.api.UserApi;
-import com.epam.learn.backendservice.dto.UserRequest;
-import com.epam.learn.backendservice.model.User;
+import com.epam.learn.backendservice.model.UserModel;
+import com.epam.learn.backendservice.service.impl.dto.UserRequest;
 import com.epam.learn.backendservice.service.UserService;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,12 +16,12 @@ public class UserController implements UserApi {
   private final UserService userService;
 
   @Override
-  public User create(UserRequest userRequest) {
+  public UserModel create(UserRequest userRequest) {
     return userService.create(userRequest);
   }
 
   @Override
-  public User get(UUID id) {
+  public UserModel get(UUID id) {
     return userService.getById(id);
   }
 
@@ -32,12 +31,17 @@ public class UserController implements UserApi {
   }
 
   @Override
-  public User update(User user) {
+  public UserModel update(UserModel user) {
     return userService.update(user);
   }
 
   @Override
-  public List<User> findAll(List<UUID> ids) {
+  public List<UserModel> findAll(List<UUID> ids) {
     return ids == null || ids.isEmpty() ? userService.getAll() : userService.getById(ids);
+  }
+
+  @Override
+  public void send(UUID id) {
+    userService.send(id);
   }
 }
