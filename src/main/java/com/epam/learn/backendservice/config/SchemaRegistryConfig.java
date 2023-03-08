@@ -12,20 +12,6 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
 @Configuration
 public class SchemaRegistryConfig {
-//  @Value("${spring.cloud.stream.kafka.binder.producer-properties.schema.registry.url}")
-//  private String endPoint;
-//
-//  @Bean
-//  public SchemaRegistryClient schemaRegistryClient() {
-//    ConfluentSchemaRegistryClient client = new ConfluentSchemaRegistryClient();
-//    client.setEndpoint(endPoint);
-//    return client;
-//  }
-//
-//  @Bean
-//  public MessageConverter userMessageConverter() {
-//    return new AvroSchemaMessageConverter(MimeType.valueOf("application/avro"));
-//  }
 
   @Bean
   public ConsumerFactory<String, UserModel> consumerFactory(KafkaProperties kafkaProperties) {
