@@ -1,5 +1,6 @@
 package com.epam.learn.backendservice.config;
 
+import com.epam.learn.backendservice.exception.KafkaErrorHandler;
 import com.epam.learn.backendservice.model.UserModel;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.CommonErrorHandler;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
 @Configuration
@@ -23,5 +25,10 @@ public class SchemaRegistryConfig {
     ConcurrentKafkaListenerContainerFactory<String, UserModel> factory = new ConcurrentKafkaListenerContainerFactory<String, UserModel>();
     factory.setConsumerFactory(consumerFactory(kafkaProperties));
     return factory;
+  }
+
+  @Bean
+  public CommonErrorHandler commonErrorHandler() {
+    return new KafkaErrorHandler();
   }
 }
