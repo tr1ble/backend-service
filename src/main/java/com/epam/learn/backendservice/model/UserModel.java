@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class User {
+public class UserModel {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;

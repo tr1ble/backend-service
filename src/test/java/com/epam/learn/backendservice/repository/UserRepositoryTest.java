@@ -3,7 +3,7 @@ package com.epam.learn.backendservice.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.epam.learn.backendservice.model.User;
+import com.epam.learn.backendservice.model.UserModel;
 import com.epam.learn.backendservice.util.UserUtils;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class UserRepositoryTest {
   @Test
   public void whenCalledSave_thenCorrectNumberOfUsers() {
     userRepository.saveAll(UserUtils.generateNewUsers(USER_COUNT));
-    List<User> users = (List<User>) userRepository.findAll();
+    List<UserModel> users = (List<UserModel>) userRepository.findAll();
 
     assertThat(users.size()).isEqualTo(USER_COUNT);
   }
@@ -35,7 +35,7 @@ public class UserRepositoryTest {
   @Test
   public void whenCalledSave_thenUpdateUser() {
     UUID id = userRepository.save(UserUtils.generateExistingUser(4)).getId();
-    Optional<User> user = userRepository.findById(id);
+    Optional<UserModel> user = userRepository.findById(id);
 
     assertTrue(user.isPresent());
     assertEquals(user.get().getUsername(), "test");
