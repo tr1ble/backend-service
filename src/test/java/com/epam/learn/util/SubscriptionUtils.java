@@ -1,6 +1,6 @@
 package com.epam.learn.util;
 
-import com.epam.learn.dto.subscription.SubscriptionDto;
+import com.epam.learn.model.Subscription;
 import com.epam.learn.dto.subscription.SubscriptionRequestDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public class SubscriptionUtils {
 
-  public static List<SubscriptionDto> generateNewSubscriptions(int number) {
-    List<SubscriptionDto> subscriptions = new ArrayList<>(number);
+  public static List<Subscription> generateNewSubscriptions(int number) {
+    List<Subscription> subscriptions = new ArrayList<>(number);
     while (number > 0) {
-      subscriptions.add(SubscriptionDto
+      subscriptions.add(Subscription
           .builder()
           .user(UserUtils.generateNewUser())
           .build());
@@ -20,8 +20,8 @@ public class SubscriptionUtils {
     return subscriptions;
   }
 
-  public static SubscriptionDto generateNewSubscription() {
-    return SubscriptionDto.builder()
+  public static Subscription generateNewSubscription() {
+    return Subscription.builder()
         .user(UserUtils.generateNewUser())
         .build();
   }

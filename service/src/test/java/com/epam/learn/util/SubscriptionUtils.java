@@ -1,9 +1,9 @@
 package com.epam.learn.util;
 
-import com.epam.learn.dto.subscription.SubscriptionDto;
+import com.epam.learn.model.Subscription;
 import com.epam.learn.dto.subscription.SubscriptionRequestDto;
 import com.epam.learn.dto.subscription.SubscriptionResponseDto;
-import com.epam.learn.dto.user.UserDto;
+import com.epam.learn.model.User;
 import java.util.UUID;
 
 public class SubscriptionUtils {
@@ -12,9 +12,9 @@ public class SubscriptionUtils {
   SubscriptionUtils () {
 
   }
-  public static SubscriptionDto generateNewSubscription() {
-    return SubscriptionDto.builder()
-        .user(UserDto.builder().build())
+  public static Subscription generateNewSubscription() {
+    return Subscription.builder()
+        .user(User.builder().build())
         .build();
   }
 

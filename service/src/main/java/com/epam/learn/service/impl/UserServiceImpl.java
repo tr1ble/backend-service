@@ -1,6 +1,6 @@
 package com.epam.learn.service.impl;
 
-import com.epam.learn.dto.user.UserDto;
+import com.epam.learn.model.User;
 import com.epam.learn.dto.user.UserRequestDto;
 import com.epam.learn.dto.user.UserResponseDto;
 import com.epam.learn.mapper.UserMapper;
@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserResponseDto create(UserRequestDto userRequest) {
-    UserDto user = userRepository.save(userMapper.mapToDomain(userRequest));
+    User user = userRepository.save(userMapper.mapToDomain(userRequest));
     return userMapper.mapToResponse(user);
   }
 
   @Override
   public List<UserResponseDto> getById(List<UUID> ids) {
-    Iterable<UserDto> users = userRepository.findAllById(ids);
+    Iterable<User> users = userRepository.findAllById(ids);
     return StreamSupport
         .stream(users.spliterator(), false)
         .map(userMapper::mapToResponse)
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<UserResponseDto> getAll() {
-    Iterable<UserDto> users = userRepository.findAll();
+    Iterable<User> users = userRepository.findAll();
     return StreamSupport
         .stream(users.spliterator(), false)
         .map(userMapper::mapToResponse)
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserResponseDto getById(UUID id) {
-    UserDto user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     return userMapper.mapToResponse(user);
   }
 
@@ -59,18 +59,18 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserResponseDto update(UserRequestDto user) {
-    UserDto userDto = userMapper.mapToDomain(user);
+    User userDto = userMapper.mapToDomain(user);
     return userMapper.mapToResponse(userRepository.save(userDto));
   }
 
   @Override
   public void send(UUID id) {
-    UserDto user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     userProducer.produceUser(userMapper.mapToAvro(user));
   }
 
   @Override
-  public UserDto getDtoById(UUID id) {
+  public User getDtoById(UUID id) {
     return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
 }

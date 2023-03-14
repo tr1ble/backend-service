@@ -1,6 +1,5 @@
 package com.epam.learn.api;
 
-import com.epam.learn.dto.user.UserDto;
 import com.epam.learn.dto.user.UserRequestDto;
 import com.epam.learn.dto.user.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;

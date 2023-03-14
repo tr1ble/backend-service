@@ -1,6 +1,6 @@
 package com.epam.learn.util;
 
-import com.epam.learn.dto.user.UserDto;
+import com.epam.learn.model.User;
 import com.epam.learn.dto.user.UserRequestDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ public class UserUtils {
   private static final String USERNAME = "test";
   private static final String PASSWORD = "test";
 
-  public static List<UserDto> generateNewUsers(int number) {
-    List<UserDto> users = new ArrayList<>(number);
+  public static List<User> generateNewUsers(int number) {
+    List<User> users = new ArrayList<>(number);
     while(number > 0) {
-      users.add(UserDto
+      users.add(User
           .builder()
               .username(USERNAME + number)
               .password(PASSWORD + number)
@@ -23,8 +23,8 @@ public class UserUtils {
     return users;
   }
 
-  public static UserDto generateNewUser() {
-    return UserDto
+  public static User generateNewUser() {
+    return User
         .builder()
         .id(UUID.randomUUID())
         .username(USERNAME)

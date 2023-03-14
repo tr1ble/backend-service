@@ -1,10 +1,11 @@
-package com.epam.learn.dto.user;
+package com.epam.learn.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -13,21 +14,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@Table(name = "users")
+@Table(name = "subscriptions")
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class UserDto {
+public class Subscription {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
-  @Column(unique = true, nullable = false)
-  private String username;
-  @Column(nullable = false)
-  private String password;
+  @ManyToOne
+  private User user;
   @Column
   @Builder.Default
-  private LocalDate birthday = LocalDate.EPOCH;
+  private LocalDate startDate = LocalDate.now();
 }

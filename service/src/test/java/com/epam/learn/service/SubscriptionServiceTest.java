@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.epam.learn.dto.subscription.SubscriptionDto;
+import com.epam.learn.model.Subscription;
 import com.epam.learn.dto.subscription.SubscriptionRequestDto;
 import com.epam.learn.dto.subscription.SubscriptionResponseDto;
 import com.epam.learn.mapper.SubscriptionMapper;
@@ -34,15 +34,15 @@ public class SubscriptionServiceTest extends TestCase {
   public void testCreate() {
     SubscriptionRequestDto request = SubscriptionUtils.generateSubscriptionRequest();
     SubscriptionResponseDto response = SubscriptionUtils.generateSubscriptionResponse();
-    SubscriptionDto subscriptionDto = SubscriptionUtils.generateNewSubscription();
-    when(repository.save(subscriptionDto)).thenReturn(subscriptionDto);
-    when(mapper.mapRequestToDomain(request)).thenReturn(subscriptionDto);
-    when(mapper.mapDomainToResponse(subscriptionDto)).thenReturn(response);
+    Subscription subscription = SubscriptionUtils.generateNewSubscription();
+    when(repository.save(subscription)).thenReturn(subscription);
+    when(mapper.mapRequestToDomain(request)).thenReturn(subscription);
+    when(mapper.mapDomainToResponse(subscription)).thenReturn(response);
 
     UUID actual = subscriptionService.create(request).getId();
 
-    verify(repository).save(subscriptionDto);
+    verify(repository).save(subscription);
 
-    assertThat(actual).isEqualTo(subscriptionDto.getId());
+    assertThat(actual).isEqualTo(subscription.getId());
   }
 }

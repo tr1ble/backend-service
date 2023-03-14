@@ -1,16 +1,11 @@
 dependencies {
-    //libs
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdoc_version}")
-    implementation ("org.springdoc:springdoc-openapi-starter-common:${springdoc_version}")
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    //modules
     implementation project(':dto')
-    implementation project(':service')
 }
 
 bootJar.enabled=false

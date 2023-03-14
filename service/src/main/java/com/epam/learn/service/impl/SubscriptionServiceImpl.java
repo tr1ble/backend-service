@@ -1,6 +1,6 @@
 package com.epam.learn.service.impl;
 
-import com.epam.learn.dto.subscription.SubscriptionDto;
+import com.epam.learn.model.Subscription;
 import com.epam.learn.dto.subscription.SubscriptionRequestDto;
 import com.epam.learn.dto.subscription.SubscriptionResponseDto;
 import com.epam.learn.mapper.SubscriptionMapper;
@@ -22,13 +22,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
   @Override
   public SubscriptionResponseDto create(SubscriptionRequestDto subscriptionRequest) {
-    SubscriptionDto subscriptionDto = subscriptionMapper.mapRequestToDomain(subscriptionRequest);
-    return subscriptionMapper.mapDomainToResponse(subscriptionRepository.save(subscriptionDto));
+    Subscription subscription = subscriptionMapper.mapRequestToDomain(subscriptionRequest);
+    return subscriptionMapper.mapDomainToResponse(subscriptionRepository.save(subscription));
   }
 
   @Override
   public List<SubscriptionResponseDto> getAll() {
-    Iterable<SubscriptionDto> users = subscriptionRepository.findAll();
+    Iterable<Subscription> users = subscriptionRepository.findAll();
     return StreamSupport
         .stream(users.spliterator(), false)
         .map(subscriptionMapper::mapDomainToResponse)
@@ -37,9 +37,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
   @Override
   public SubscriptionResponseDto getById(UUID id) {
-    SubscriptionDto subscriptionDto = subscriptionRepository.findById(id).orElseThrow(
+    Subscription subscription = subscriptionRepository.findById(id).orElseThrow(
         EntityNotFoundException::new);
-    return subscriptionMapper.mapDomainToResponse(subscriptionDto);
+    return subscriptionMapper.mapDomainToResponse(subscription);
   }
 
   @Override
@@ -49,7 +49,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
   @Override
   public SubscriptionResponseDto update(SubscriptionRequestDto subscription) {
-    SubscriptionDto subscriptionDto = subscriptionMapper.mapRequestToDomain(subscription);
+    Subscription subscriptionDto = subscriptionMapper.mapRequestToDomain(subscription);
     return subscriptionMapper.mapDomainToResponse(subscriptionRepository.save(subscriptionDto));
   }
 }

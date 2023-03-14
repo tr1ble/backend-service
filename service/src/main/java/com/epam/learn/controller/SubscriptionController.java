@@ -1,4 +1,4 @@
-package com.epam.learn.api.controller;
+package com.epam.learn.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 

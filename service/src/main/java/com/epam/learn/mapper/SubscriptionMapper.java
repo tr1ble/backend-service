@@ -1,7 +1,7 @@
 package com.epam.learn.mapper;
 
 import com.epam.learn.config.MappersConfig;
-import com.epam.learn.dto.subscription.SubscriptionDto;
+import com.epam.learn.model.Subscription;
 import com.epam.learn.dto.subscription.SubscriptionRequestDto;
 import com.epam.learn.dto.subscription.SubscriptionResponseDto;
 import com.epam.learn.service.UserService;
@@ -15,7 +15,7 @@ public abstract class SubscriptionMapper {
   protected UserService userService;
   @Mapping(target = "startDate", ignore = true)
   @Mapping(target = "user", expression = "java(userService.getDtoById(source.getUserId()))")
-  public abstract SubscriptionDto mapRequestToDomain(SubscriptionRequestDto source);
+  public abstract Subscription mapRequestToDomain(SubscriptionRequestDto source);
   @Mapping(target = "userId", expression = "java(source.getUser().getId())")
-  public abstract SubscriptionResponseDto mapDomainToResponse(SubscriptionDto source);
+  public abstract SubscriptionResponseDto mapDomainToResponse(Subscription source);
 }

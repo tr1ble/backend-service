@@ -1,22 +1,20 @@
 package com.epam.learn.service;
 
-import com.epam.learn.dto.subscription.SubscriptionDto;
 import com.epam.learn.dto.subscription.SubscriptionRequestDto;
 import com.epam.learn.dto.subscription.SubscriptionResponseDto;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface SubscriptionService {
-  @Transactional(isolation = Isolation.SERIALIZABLE)
+  @Transactional
   SubscriptionResponseDto create(SubscriptionRequestDto subscription);
-  @Transactional(isolation = Isolation.READ_COMMITTED)
+  @Transactional
   List<SubscriptionResponseDto> getAll();
-  @Transactional(isolation = Isolation.READ_COMMITTED)
+  @Transactional
   SubscriptionResponseDto getById(UUID id);
-  @Transactional(isolation = Isolation.SERIALIZABLE)
+  @Transactional
   void deleteById(UUID id);
-  @Transactional(isolation = Isolation.SERIALIZABLE)
+  @Transactional
   SubscriptionResponseDto update(SubscriptionRequestDto subscription);
 }
