@@ -6,3 +6,8 @@ pluginManagement {
 }
 
 rootProject.name = 'backend-service'
+include 'dto'
+include 'api'
+include 'service'
+include 'database'
+

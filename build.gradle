@@ -25,23 +25,28 @@ repositories {
 }
 
 dependencies {
+    //libs
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka:3.1.5'
-    implementation 'org.springframework.cloud:spring-cloud-stream-schema:2.2.1.RELEASE'
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    implementation 'junit:junit:4.13.1'
-    implementation 'io.confluent:kafka-avro-serializer:7.3.2'
-    implementation 'io.confluent:kafka-schema-registry-client:7.3.2'
-    implementation "org.apache.avro:avro:1.11.0"
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdoc_version}")
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    //testing
+    implementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //modules
+    implementation project(':api')
+
+    //modules for integration testing
+    testImplementation project(':dto')
+    testImplementation project(':database')
+    testImplementation project(':service')
 }
 
 tasks.named('test') {
@@ -56,8 +61,30 @@ jacocoTestReport {
     dependsOn test
 }
 
-pmd {
-    consoleOutput = true
-    ruleSetFiles = files("pmd-rules.xml")
-    ruleSets = []
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'pmd'
+    apply plugin: 'jacoco'
+
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven {
+            url "https://packages.confluent.io/maven/"
+        }
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test
+    }
 }
