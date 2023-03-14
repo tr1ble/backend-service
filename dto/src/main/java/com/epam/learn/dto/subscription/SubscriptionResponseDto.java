@@ -11,7 +11,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 public class SubscriptionResponseDto extends RepresentationModel<SubscriptionResponseDto> {
-  UUID id;
-  UUID userId;
-  LocalDate startDate;
+  private UUID id;
+  private UUID userId;
+  private LocalDate startDate;
 }

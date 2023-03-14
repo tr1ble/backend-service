@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class UserRequestDto {
-  UUID id;
+  private UUID id;
   private String username;
   private String password;
   @Builder.Default

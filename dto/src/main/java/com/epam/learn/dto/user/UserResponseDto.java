@@ -9,7 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserResponseDto extends RepresentationModel<UserResponseDto> {
-  UUID id;
+  private UUID id;
   private String username;
   private String password;
   private LocalDate birthday;

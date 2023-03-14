@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class SubscriptionRequestDto {
-  UUID id;
-  UUID userId;
+  private UUID id;
+  private UUID userId;
 }
