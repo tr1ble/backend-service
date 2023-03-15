@@ -7,21 +7,14 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface UserService {
-  @Transactional
   UserResponseDto create(UserRequestDto user);
-  @Transactional
   List<UserResponseDto> getById(List<UUID> ids);
-  @Transactional
   List<UserResponseDto> getAll();
-  @Transactional
   UserResponseDto getById(UUID id);
-  @Transactional
   void deleteById(UUID id);
-  @Transactional
   UserResponseDto update(UserRequestDto user);
-  @Transactional
   void send(UUID id);
-  @Transactional
   User getDtoById(UUID id);
 }

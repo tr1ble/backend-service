@@ -1,6 +1,6 @@
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation ("org.springframework:spring-webmvc:${springmvc_version}")
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdoc_version}")
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

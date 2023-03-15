@@ -6,15 +6,11 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface SubscriptionService {
-  @Transactional
   SubscriptionResponseDto create(SubscriptionRequestDto subscription);
-  @Transactional
   List<SubscriptionResponseDto> getAll();
-  @Transactional
   SubscriptionResponseDto getById(UUID id);
-  @Transactional
   void deleteById(UUID id);
-  @Transactional
   SubscriptionResponseDto update(SubscriptionRequestDto subscription);
 }

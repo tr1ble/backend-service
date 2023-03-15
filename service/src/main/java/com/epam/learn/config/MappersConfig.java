@@ -1,7 +1,7 @@
 package com.epam.learn.config;
 
 import org.mapstruct.MapperConfig;
-  import org.mapstruct.ReportingPolicy;
+import org.mapstruct.ReportingPolicy;
 
 @MapperConfig(
     componentModel = "spring",
