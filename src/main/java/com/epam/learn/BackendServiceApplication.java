@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @SpringBootApplication(scanBasePackages = "com.epam.learn")
-@EnableWebSecurity
 @EntityScan("com.epam.learn")
 public class BackendServiceApplication {
 

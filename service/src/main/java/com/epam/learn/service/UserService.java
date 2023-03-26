@@ -5,10 +5,11 @@ import com.epam.learn.dto.user.UserRequestDto;
 import com.epam.learn.dto.user.UserResponseDto;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public interface UserService {
+public interface UserService extends UserDetailsService {
   UserResponseDto create(UserRequestDto user);
   List<UserResponseDto> getById(List<UUID> ids);
   List<UserResponseDto> getAll();
