@@ -39,7 +39,6 @@ public class SecurityConfig {
         .formLogin()
         .loginPage("/login")
         .failureUrl("/login?error")
-        .
         .permitAll()
         .and()
         .logout()

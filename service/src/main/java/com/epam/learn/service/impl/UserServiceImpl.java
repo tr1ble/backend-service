@@ -18,7 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
   public UserResponseDto create(UserRequestDto userRequest) {
     User mappedUser = userMapper.mapToDomain(userRequest);
     mappedUser.setPassword(passwordEncoder.encode(mappedUser.getPassword()));
-    Role defaultRole = roleRepository.findByName(DEFAULT_ROLE).orElseThrow(EntityNotFoundException::new);
+    Role defaultRole = roleRepository.findByName(DEFAULT_ROLE);
     Set<Role> roles = mappedUser.getRoles();
     roles.add(defaultRole);
     mappedUser.setRoles(roles);
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDetails loadUserByUsername(String username) {
     if(securityService.isBlocked()) {
-      throw new RuntimeException("blocked");
+      throw new LockedException("blocked");
     }
     User user = userRepository.findByUsername(username);
     if (user == null) throw new UsernameNotFoundException(username);
