@@ -27,7 +27,6 @@ public class SecurityConfig {
         .csrf().disable()
         .cors().configurationSource(request -> buildCorsConfiguration()).and()
         .authorizeHttpRequests((requests) -> requests
-            .requestMatchers("/").permitAll()
             .requestMatchers("/about").permitAll()
             .requestMatchers("/registration").permitAll()
             .requestMatchers("/actuator/**").hasRole("ADMIN")
