@@ -22,7 +22,7 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
     super.onAuthenticationFailure(request, response, exception);
     String errorMessage;
     errorMessage = "Bad credentials";
-    if (securityService.isBlocked()) {
+    if (securityService.isBlocked(request.getUserPrincipal().getName())) {
       errorMessage = "Max login attempts exceed";
     }
     if (exception.getMessage().equalsIgnoreCase("blocked")) {

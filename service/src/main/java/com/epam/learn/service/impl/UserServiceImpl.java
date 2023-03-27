@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDetails loadUserByUsername(String username) {
-    if(securityService.isBlocked()) {
+    if(securityService.isBlocked(username)) {
       throw new LockedException("blocked");
     }
     User user = userRepository.findByUsername(username);

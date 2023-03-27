@@ -54,9 +54,9 @@ public class SecurityServiceImpl implements SecurityService {
   }
 
   @Override
-  public boolean isBlocked() {
+  public boolean isBlocked(String username) {
     try {
-      return attemptsCache.get(getClientIP()) >= MAX_ATTEMPT;
+      return attemptsCache.get(username) >= MAX_ATTEMPT;
     } catch (final ExecutionException e) {
       return false;
     }
@@ -71,13 +71,5 @@ public class SecurityServiceImpl implements SecurityService {
         return false;
       }
     }).toList();
-  }
-
-  private String getClientIP() {
-    String xfHeader = request.getHeader("X-Forwarded-For");
-    if (xfHeader == null || xfHeader.isEmpty() || !xfHeader.contains(request.getRemoteAddr())) {
-      return request.getRemoteAddr();
-    }
-    return xfHeader.split(",")[0];
   }
 }
