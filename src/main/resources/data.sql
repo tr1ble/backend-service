@@ -1,0 +1,9 @@
+INSERT INTO roles(id, name) SELECT '123e4567-e89b-12d3-a456-426614174000', 'ROLE_USER' WHERE NOT EXISTS(SELECT name FROM roles WHERE  name = 'ROLE_USER');
+INSERT INTO roles(id, name) SELECT '123e4567-e89b-12d3-a456-426614174001', 'ROLE_ADMIN' WHERE NOT EXISTS(SELECT name FROM roles WHERE  name = 'ROLE_ADMIN');
+
+INSERT INTO users(id, username, password) SELECT '123e4567-e89b-12d3-a456-426614174002', 'admin', '$2a$12$fiBwspXISej9l2oH8me6xenk2weZFJroFOwvwyJlzOcmQgVoHXsPa' WHERE NOT EXISTS(SELECT username FROM users WHERE  username = 'admin');
+INSERT INTO users(id, username, password) SELECT '123e4567-e89b-12d3-a456-426614174003', 'user', '$2a$12$SZt0gxUQScDut4UAkU/mNu/skmHsAs7VkU8SI8nAehBE9uw3jvz5K' WHERE NOT EXISTS(SELECT username FROM users WHERE  username = 'user');
+
+INSERT INTO users_roles(roles_id, users_id) SELECT '123e4567-e89b-12d3-a456-426614174000', '123e4567-e89b-12d3-a456-426614174002' WHERE NOT EXISTS(SELECT roles_id, users_id FROM users_roles WHERE  roles_id = '123e4567-e89b-12d3-a456-426614174000' AND users_id = '123e4567-e89b-12d3-a456-426614174002');
+INSERT INTO users_roles(roles_id, users_id) SELECT '123e4567-e89b-12d3-a456-426614174001', '123e4567-e89b-12d3-a456-426614174002' WHERE NOT EXISTS(SELECT roles_id, users_id FROM users_roles WHERE  roles_id = '123e4567-e89b-12d3-a456-426614174001' AND users_id = '123e4567-e89b-12d3-a456-426614174002');
+INSERT INTO users_roles(roles_id, users_id) SELECT '123e4567-e89b-12d3-a456-426614174000', '123e4567-e89b-12d3-a456-426614174003' WHERE NOT EXISTS(SELECT roles_id, users_id FROM users_roles WHERE  roles_id = '123e4567-e89b-12d3-a456-426614174000' AND users_id = '123e4567-e89b-12d3-a456-426614174003');

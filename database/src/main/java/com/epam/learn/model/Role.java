@@ -9,25 +9,23 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@Table(name = "users")
 @Entity
-@Data
-@Builder
-@AllArgsConstructor
+@Table(name="roles")
+@Getter
+@NoArgsConstructor
 @RequiredArgsConstructor
-public class User {
+public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @NonNull
   private UUID id;
   @Column(unique = true, nullable = false)
-  private String username;
-  @Column(nullable = false)
-  private String password;
-  @ManyToMany
-  private Set<Role> roles;
+  private String name;
+  @ManyToMany(mappedBy = "roles")
+  private Set<User> users;
 }
