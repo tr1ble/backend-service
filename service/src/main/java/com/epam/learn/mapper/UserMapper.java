@@ -29,8 +29,8 @@ public abstract class UserMapper {
   @Mapping(target = "role", expression = "java(UserMapper.mapRoleToEnum(source.getRole()))")
   public abstract User mapToDomain(UserRequestDto source);
 
-  @Mapping(target = "roles", expression = "java(UserMapper.mapRoleToString(source.getRole()))")
-  public abstract com.epam.learn.User mapToAvro(User user);
+  @Mapping(target = "role", expression = "java(UserMapper.mapRoleToString(source.getRole()))")
+  public abstract com.epam.learn.User mapToAvro(User source);
 
   public abstract UserResponseDto mapToResponse(User source);
 }

@@ -18,7 +18,7 @@ public interface AuthApi {
   @ResponseStatus(HttpStatus.OK)
   AuthenticationResponse login(@Valid @RequestBody AuthenticationRequest authenticationRequest);
   @Operation(summary = "Registration", description = "Registration by user")
-  @PostMapping("/registration")
+  @PostMapping("/register")
   @ResponseStatus(HttpStatus.OK)
   AuthenticationResponse registration(@Valid @RequestBody AuthenticationRequest authenticationRequest);
 

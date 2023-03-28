@@ -11,15 +11,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JwtServiceImpl implements JwtService {
 
-  @Value("${jwt.key}")
-  private String key;
+  @Value("${jwt.token.validity}")
+  private long TOKEN_VALIDITY;
+
+  @Value("${jwt.signing.key}")
+  private String SIGNING_KEY;
+
+  private final static String AUTHORITIES_KEY = "role";
 
   @Override
   public String extractUsername(String token) {
@@ -33,12 +40,17 @@ public class JwtServiceImpl implements JwtService {
 
   @Override
   public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
+    String authorities = userDetails.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.joining(","));
+
     return Jwts
         .builder()
         .setClaims(claims)
+        .claim(AUTHORITIES_KEY, authorities)
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+        .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY*1000))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
   }
@@ -52,7 +64,6 @@ public class JwtServiceImpl implements JwtService {
   public boolean isTokenValid(String token, UserDetails userDetails) {
     final String username = extractUsername(token);
     return username.equals(userDetails.getUsername())
-        && isTokenValid(token, userDetails)
         && !isTokenExpired(token);
   }
 
@@ -76,7 +87,7 @@ public class JwtServiceImpl implements JwtService {
   }
 
   private Key getSigningKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(key);
+    byte[] keyBytes = Decoders.BASE64.decode(SIGNING_KEY);
     return Keys.hmacShaKeyFor(keyBytes);
   }
 }
