@@ -2,7 +2,7 @@
   "type": "record",
   "name": "User",
   "namespace": "com.epam.learn",
-  "version": 3,
+  "version": 4,
   "fields": [
     {
       "name": "id",
@@ -17,10 +17,7 @@
       "type": "string"
     },
     {
-      "name": "roles",
-      "type": {
-        "type":"array",
-        "items": "string"
-      }
+      "name": "role",
+      "type": "string"
     }]
 }

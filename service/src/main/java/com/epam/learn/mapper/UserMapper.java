@@ -17,25 +17,19 @@ import org.mapstruct.Mapping;
 @Mapper(config = MappersConfig.class)
 public abstract class UserMapper {
 
-  protected static Set<Role> mapSetValues(Set<UUID> set, Function<UUID, Role> function) {
-    return
-        set != null ? set.stream()
-            .map(function)
-            .collect(Collectors.toSet())
-            : new HashSet<>();
+  protected static Role mapRoleToEnum(String role) {
+    return Role.valueOf(role);
   }
 
-  protected static List<String> mapSetToList(Set<Role> set, Function<Role, String> function) {
-    return set.stream()
-        .map(function)
-        .collect(Collectors.toList());
+  protected static String mapRoleToString(Role role) {
+    return role.name();
   }
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "roles", expression = "java(UserMapper.mapSetValues(source.getRoles(), role -> new Role(role)))")
+  @Mapping(target = "role", expression = "java(UserMapper.mapRoleToEnum(source.getRole()))")
   public abstract User mapToDomain(UserRequestDto source);
 
-  @Mapping(target = "roles", expression = "java(UserMapper.mapSetToList(user.getRoles(), role -> role.getId().toString()))")
+  @Mapping(target = "roles", expression = "java(UserMapper.mapRoleToString(source.getRole()))")
   public abstract com.epam.learn.User mapToAvro(User user);
 
   public abstract UserResponseDto mapToResponse(User source);

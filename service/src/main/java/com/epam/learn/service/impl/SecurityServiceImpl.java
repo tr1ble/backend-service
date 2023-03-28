@@ -14,14 +14,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SecurityServiceImpl implements SecurityService {
-  private final HttpServletRequest request;
 
   public static final int MAX_ATTEMPT = 3;
   private final LoadingCache<String, Integer> attemptsCache;
 
-  public SecurityServiceImpl(HttpServletRequest request) {
+  public SecurityServiceImpl() {
     super();
-    this.request = request;
     attemptsCache = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build(
         new CacheLoader<>() {
           @Override

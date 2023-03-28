@@ -12,5 +12,5 @@ public class UserRequestDto {
   private UUID id;
   private String username;
   private String password;
-  private Set<UUID> roles;
+  private String role;
 }

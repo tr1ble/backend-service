@@ -1,19 +1,28 @@
 package com.epam.learn.config;
 
+import jakarta.servlet.Filter;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 @Profile("!test")
 public class SecurityConfig {
+
+  private final Filter jwtAuthFilter;
+  private final AuthenticationProvider authenticationProvider;
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -28,6 +37,7 @@ public class SecurityConfig {
         .cors().configurationSource(request -> buildCorsConfiguration()).and()
         .authorizeHttpRequests((requests) -> requests
             .requestMatchers("/about").permitAll()
+            .requestMatchers("/login").permitAll()
             .requestMatchers("/registration").permitAll()
             .requestMatchers("/actuator/**").hasRole("ADMIN")
             .requestMatchers("/user/**").hasRole("ADMIN")
@@ -35,15 +45,14 @@ public class SecurityConfig {
             .requestMatchers("/subscription/**").hasRole("USER")
             .anyRequest()
             .authenticated())
-        .formLogin()
-        .loginPage("/login")
-        .failureUrl("/login?error")
-        .permitAll()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
+        .authenticationProvider(authenticationProvider)
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         .logout()
         .clearAuthentication(true)
         .invalidateHttpSession(true)
-        .logoutSuccessUrl("/login?logout")
         .permitAll()
         .and()
         .httpBasic();
