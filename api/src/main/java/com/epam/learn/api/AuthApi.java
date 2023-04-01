@@ -1,7 +1,7 @@
 package com.epam.learn.api;
 
-import com.epam.learn.dto.user.UserRequestDto;
-import com.epam.learn.dto.user.UserResponseDto;
+import com.epam.learn.dto.authentication.AuthenticationRequest;
+import com.epam.learn.dto.authentication.AuthenticationResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Tag(name = "Auth API", description = "Authentication API for users")
 public interface AuthApi {
-  @Operation(summary = "Registration", description = "Registration by user")
-  @PostMapping("/registration")
+  @Operation(summary = "Login", description = "Login by user")
+  @PostMapping("/login")
   @ResponseStatus(HttpStatus.OK)
-  UserResponseDto registration(@Valid @RequestBody UserRequestDto userRequest);
+  AuthenticationResponse login(@Valid @RequestBody AuthenticationRequest authenticationRequest);
+  @Operation(summary = "Registration", description = "Registration by user")
+  @PostMapping("/register")
+  @ResponseStatus(HttpStatus.OK)
+  AuthenticationResponse registration(@Valid @RequestBody AuthenticationRequest authenticationRequest);
 
   @Operation(summary = "Get blocked", description = "Get blocked users IPs")
   @PostMapping("/getBlocked")
